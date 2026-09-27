@@ -1,0 +1,13 @@
+---
+interface Props { flip?: boolean }
+const { flip = false } = Astro.props;
+---
+<svg width="16" height="30" viewBox="0 0 16 30" aria-hidden="true" class="laurel" style={flip ? 'transform:scaleX(-1)' : undefined}>
+  <path d="M9 29C5 24 4 16 7 2" fill="none" stroke-width="1.4" stroke-linecap="round" />
+  <ellipse cx="11" cy="6" rx="1.8" ry="3.6" transform="rotate(35 11 6)" />
+  <ellipse cx="3.6" cy="9" rx="1.8" ry="3.6" transform="rotate(-35 3.6 9)" />
+  <ellipse cx="10.4" cy="13" rx="1.8" ry="3.6" transform="rotate(40 10.4 13)" />
+  <ellipse cx="3.4" cy="16" rx="1.8" ry="3.6" transform="rotate(-40 3.4 16)" />
+  <ellipse cx="10.8" cy="20" rx="1.8" ry="3.4" transform="rotate(45 10.8 20)" />
+  <ellipse cx="4.4" cy="23" rx="1.8" ry="3.4" transform="rotate(-45 4.4 23)" />
+</svg>

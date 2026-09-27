@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import LiftPicker from '../components/LiftPicker.astro';
+import Testimonials from '../components/Testimonials.astro';
+import Formulas from '../components/Formulas.astro';
+import Faq from '../components/Faq.astro';
+import Footer from '../components/Footer.astro';
+---
+<Base>
+  <div class="app">
+    <!-- Step 1 + all SEO content: server-rendered, crawlable without JS. -->
+    <main id="landing" class="screen">
+      <Hero />
+      <HowItWorks />
+      <LiftPicker />
+      <div class="divider" role="presentation"></div>
+      <Testimonials />
+      <Formulas />
+      <Faq />
+    </main>
+
+    <!-- Steps 2–5, calculating and results: rendered client-side by src/scripts/flow.ts -->
+    <div id="flow" aria-live="polite" hidden></div>
+
+    <Footer />
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+    import { initFlow } from '../scripts/flow';
+    import { initCarousel } from '../scripts/carousel';
+    initFlow();
+    initCarousel();
+  </script>
+</Base>

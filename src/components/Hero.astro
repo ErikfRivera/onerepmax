@@ -1,0 +1,19 @@
+---
+import Laurel from './Laurel.astro';
+import { SITE } from '../data/site';
+---
+<div class="logo"><span>[LOGO]</span></div>
+<div class="hero">
+  <div class="proof">
+    <Laurel />
+    <span class="faces" aria-hidden="true"><i style="background:#D6D0C4"></i><i style="background:#B8B0A1"></i><i style="background:#8F887B"></i></span>
+    <span>Maxes taken by <b>{SITE.usersCount}</b> lifters &amp; coaches</span>
+    <Laurel flip />
+  </div>
+  <h1>One-Rep Max Calculator</h1>
+  <p class="lede">Find your one-rep max. See how you compare.</p>
+  <p class="credit">
+    Built on the formulas of <b>Boyd Epley</b>, founder of the National Strength and Conditioning Association,
+    and <b>Matt Brzycki</b>, Princeton’s longtime strength coach.
+  </p>
+</div>

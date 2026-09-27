@@ -1,0 +1,13 @@
+---
+import { HOW_IT_WORKS } from '../data/content';
+---
+<section class="how-strip" aria-labelledby="h-head">
+  <h2 id="h-head">How it works</h2>
+  <div class="how-track">
+    <ol>
+      {HOW_IT_WORKS.map((t, i) => (
+        <li><span class="n" aria-hidden="true">{i + 1}</span><span class="t">{t}</span></li>
+      ))}
+    </ol>
+  </div>
+</section>

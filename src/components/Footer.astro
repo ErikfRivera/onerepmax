@@ -1,0 +1,17 @@
+---
+import { SITE } from '../data/site';
+import { FOOTER_COLUMNS } from '../data/content';
+---
+<footer class="foot" id="site-footer">
+  <div class="foot-brand"><span class="foot-logo">[LOGO]</span><p>Free strength tools for lifters and coaches, built on published research.</p></div>
+  <nav class="foot-cols" aria-label="Footer">
+    {FOOTER_COLUMNS.map((c) => (
+      <div>
+        <h2>{c.heading}</h2>
+        <ul>{c.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
+      </div>
+    ))}
+  </nav>
+  <p class="foot-note">Estimates only, not medical advice. Test a true max only with a spotter or safety pins, and check with a doctor before starting a new program.</p>
+  <div class="foot-legal"><span>© {SITE.year} {SITE.brand}</span><span><a href="#">Privacy</a><a href="#">Terms</a></span></div>
+</footer>

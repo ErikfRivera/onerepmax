@@ -1,0 +1,15 @@
+---
+import { FAQ } from '../data/content';
+---
+<section class="below faq" aria-labelledby="f-head">
+  <h2 id="f-head">One-rep max FAQ</h2>
+  {FAQ.map((f, i) => (
+    <details open={i === 0}>
+      <summary>
+        <span>{f.q}</span>
+        <svg class="chev" width="18" height="18" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6l4 4 4-4" /></svg>
+      </summary>
+      <div class="ans" set:html={f.html} />
+    </details>
+  ))}
+</section>

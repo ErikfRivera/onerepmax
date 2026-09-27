@@ -1,0 +1,21 @@
+---
+import { TESTIMONIALS } from '../data/content';
+---
+<section class="below" aria-labelledby="t-head">
+  <h2 id="t-head">What lifters say</h2>
+  <div class="quotes" id="quotes" tabindex="0" aria-label="Testimonials, swipe for more">
+    {TESTIMONIALS.map((t) => (
+      <figure class="quote">
+        <span class="tag">{t.tag}</span>
+        <blockquote>{t.quote}</blockquote>
+        <figcaption><i aria-hidden="true"></i><span><b>{t.name}</b><small>{t.who}</small></span></figcaption>
+      </figure>
+    ))}
+  </div>
+  <div class="dots-row">
+    <div class="dots" id="dots" aria-hidden="true">
+      {TESTIMONIALS.map((_, i) => <i class={i === 0 ? 'on' : ''}></i>)}
+    </div>
+    <button type="button" class="play" id="qplay" aria-label="Pause testimonials"></button>
+  </div>
+</section>

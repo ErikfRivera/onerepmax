@@ -1,0 +1,35 @@
+---
+import { FORMULA_META, EXAMPLE_SET } from '../data/content';
+import { FORMULAS, estimate } from '../lib/onerm';
+const { weight: w, reps: r } = EXAMPLE_SET;
+const rows = FORMULA_META.map((f) => ({ ...f, value: Math.round(FORMULAS[f.id](w, r)) }));
+const avg = estimate(w, r).max;
+---
+<section class="below formulas" id="formulas" aria-labelledby="m-head">
+  <h2 id="m-head">The one-rep max formulas we use</h2>
+  <p class="intro">A 1RM calculator turns a hard set into an estimated max with a prediction equation. We use the two most widely cited, Epley and Brzycki, and average them.</p>
+  <div class="fcards">
+    <div class="fcard"><b>Epley formula</b><span class="eq">1RM = w × (1 + r ÷ 30)</span><p>Published in 1985 by Boyd Epley, the University of Nebraska strength coach who founded the National Strength and Conditioning Association.</p></div>
+    <div class="fcard"><b>Brzycki formula</b><span class="eq">1RM = w × 36 ÷ (37 − r)</span><p>Published in 1993 by Matt Brzycki, longtime strength coach at Princeton University.</p></div>
+  </div>
+  <p class="body">Epley reads a little high below 10 reps and Brzycki a little low. At exactly 10 reps they agree, so their average lands in the middle of the published formulas. Here is every major equation for the same set, {w} lb × {r} (w is weight, r is reps):</p>
+  <div class="table-wrap">
+    <table class="ftable">
+      <thead><tr><th>Formula</th><th>Equation</th><th>{w} × {r}</th></tr></thead>
+      <tbody>
+        {rows.map((f) => (
+          <tr class={f.used ? 'used' : undefined}>
+            <td><b>{f.name}</b><small>{f.year}{f.used ? ', in our average' : ''}</small></td>
+            <td class="eqc">{f.eq}</td>
+            <td class="num">{f.value}</td>
+          </tr>
+        ))}
+        <tr class="avg"><td><b>Our estimate</b><small>Epley and Brzycki average</small></td><td class="eqc"></td><td class="num">{avg}</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3 class="sub-h">Adjusting for reps in reserve</h3>
+  <p class="body">Every formula assumes your set went to failure. If you had reps left, we add them to your rep count before calculating. This is the reps-in-reserve (RIR) method behind the modern RPE scale, introduced for lifting by Zourdos and colleagues in 2016.</p>
+  <h3 class="sub-h">Where estimates break down</h3>
+  <p class="body">Formulas agree closely at 2–6 reps and spread apart past 10, which is why we cap input at 10. Brzycki stops working entirely near 37 reps. Lifters with a lot of endurance training tend to get overestimated; lifters who mostly train heavy singles tend to get underestimated.</p>
+</section>

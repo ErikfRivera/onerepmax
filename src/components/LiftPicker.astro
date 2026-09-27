@@ -1,0 +1,15 @@
+---
+import { LIFTS } from '../data/flow';
+---
+<div class="lift-picker">
+  <div class="q-row"><h2>Which lift did you do?</h2><span>1/5</span></div>
+  <div class="lift-grid">
+    {LIFTS.map((l) => (
+      <button type="button" class="tile lift" data-lift={l.id} aria-pressed="false">
+        <strong>{l.id}</strong><small>{l.sub}</small>
+      </button>
+    ))}
+  </div>
+  <noscript><p class="hint">The calculator needs JavaScript. The formulas and FAQ below work without it.</p></noscript>
+</div>
+<p class="footnote landing-note">About 20 seconds. Free, no signup, no email.</p>
