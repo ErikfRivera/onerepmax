@@ -178,19 +178,10 @@ h1{margin:0;font-family:var(--display);font-stretch:88%;font-weight:800;font-siz
 .tool-list small{display:block;font-size:13px;color:var(--muted);margin-top:2px}
 .tool-list svg{flex-shrink:0;color:var(--muted)}
 .divider{height:1px;background:var(--line);margin:10px 0 0}
-.foot{margin:32px -20px -20px;padding:28px 20px calc(24px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--ground);display:flex;flex-direction:column;gap:24px}
-.foot a{color:inherit;text-decoration:none}
+.foot{margin:32px -20px -20px;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--ground)}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;justify-content:center;gap:24px}
+.foot a{display:inline-flex;align-items:center;min-height:44px;color:inherit;text-decoration:none;font-size:14px;font-weight:500}
 .foot a:hover{text-decoration:underline;text-underline-offset:3px}
-.foot-logo{display:inline-block;font-family:var(--display);font-weight:800;font-size:13px;letter-spacing:.04em;border:1.5px dashed currentColor;padding:5px 9px;border-radius:6px}
-.foot-brand p{margin:12px 0 0;font-size:14px;line-height:1.45;opacity:.8;max-width:32ch}
-.foot-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.foot-cols h2{margin:0 0 6px;font-size:13px;font-weight:700;opacity:.65}
-.foot-cols ul{list-style:none;margin:0;padding:0}
-.foot-cols a{display:flex;align-items:center;min-height:40px;font-size:15px;font-weight:500}
-.foot-note{margin:0;font-size:12px;line-height:1.5;opacity:.7}
-.foot-legal{display:flex;justify-content:space-between;align-items:center;padding-top:16px;border-top:1px solid color-mix(in srgb,currentColor 20%,transparent);font-size:13px;opacity:.8}
-.foot-legal span:last-child{display:flex;gap:18px}
-.foot-legal a{display:inline-flex;align-items:center;min-height:44px}
 
 /* loading */
 .loading{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:var(--ink);color:var(--ground);padding:40px}
