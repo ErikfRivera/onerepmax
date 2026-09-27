@@ -7,6 +7,11 @@ import { LIFTS, RIR, AGE_BANDS, SEXES, type LiftId } from '../data/flow';
 import {
   estimate, trainingTable, roundTo, convertWeight, convertBodyweight, weightWarning, fmt, type Unit,
 } from '../lib/onerm';
+import {
+  facebookShareUrl, IMAGE_FORMATS, imagePath, instagramCaption, parseShareSlug, sharePath, shareCopy, shareSlug,
+  xIntentUrl,
+  type ImageFormat, type SharedResult,
+} from '../lib/share';
 
 type Screen = 'input' | 'loading' | 'result';
 interface State {
@@ -23,7 +28,7 @@ const S: State = {
 };
 
 let landing: HTMLElement, flow: HTMLElement, footer: HTMLElement;
-let timer: number | undefined;
+let timer: number | undefined, toastTimer: number | undefined;
 const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const ICON = {
@@ -38,6 +43,12 @@ const num = (v: string) => { const n = parseFloat(v); return isFinite(n) ? n : 0
 const lift = () => LIFTS.find((l) => l.id === S.lift) ?? LIFTS[0];
 const compareReady = () => !!(S.sex && S.band && num(S.bw) > 0);
 const calc = () => estimate(num(S.weight), S.reps ?? 1, S.rir ?? 0);
+const shared = (): SharedResult => ({
+  lift: lift().id, weight: num(fmt(num(S.weight))), unit: S.unit, reps: S.reps ?? 1, rir: S.rir ?? 0,
+});
+/** False for results that can't have a share page, e.g. a typo above the world record. */
+const shareable = () => parseShareSlug(shareSlug(shared())) !== null;
+const shareUrl = () => location.origin + sharePath(shared());
 
 /* ---------- navigation ---------- */
 
@@ -166,12 +177,22 @@ function results() {
         <div class="formula">Epley ${c.epley}, Brzycki ${c.brzycki}. Average shown${rirNote}.</div>${rank}</section>
       <section><div class="sec-head"><h3>Training weights</h3><span>rounded to ${roundTo(S.unit)} ${S.unit}</span></div>
         <div class="table-wrap"><table><thead><tr><th>% of max</th><th>Weight</th><th>Reps</th></tr></thead><tbody>${rows}</tbody></table></div></section>
-      <section><h3>Share your max</h3>
-        <div class="share-card"><div class="t">${l.title} one-rep max</div><div class="n"><b>${c.max}</b><span>${S.unit}</span></div>
-          <div class="f"><span>${S.weight} × ${S.reps}</span><strong>[yourdomain].com/1rm</strong></div></div>
-        <button class="primary" data-act="share">Share my max</button></section>
+      ${shareable() ? shareSection() : ''}
       <button class="secondary" data-act="again">Calculate another lift</button>
     </div></div>`;
+}
+
+function shareSection() {
+  const r = shared();
+  const more = 'share' in navigator ? '<button class="link-btn" data-share="more">More ways to share</button>' : '';
+  return `<section><h3>Share your max</h3>
+        <img class="share-img" src="${imagePath(r, 'post')}" alt="${shareCopy(r).alt}" width="${IMAGE_FORMATS.post.width}" height="${IMAGE_FORMATS.post.height}">
+        <button class="primary" data-share="story">Share to Instagram story</button>
+        <div class="share-grid">
+          <button data-share="post">Instagram post</button><button data-share="facebook">Facebook</button>
+          <button data-share="x">X</button><button data-share="copy">Copy link</button>
+        </div>${more}
+        <p class="src">Your link shows this result as its preview image, then opens the calculator.</p></section>`;
 }
 
 /* ---------- render ---------- */
@@ -190,6 +211,7 @@ function render(noAnim = false) {
     const views: Record<number, () => string> = { 2: step2, 3: step3, 4: step4, 5: step5 };
     flow.innerHTML = S.screen === 'loading' ? loading() : S.screen === 'result' ? results() : views[S.step]();
     if (noAnim) flow.querySelector('.screen')?.classList.remove('enter', 'enter-back');
+    if (S.screen === 'result' && shareable()) prefetchShareImages();
   }
   if (!noAnim) window.scrollTo(0, 0);
 }
@@ -205,22 +227,82 @@ function setUnit(to: Unit) {
   render(true);
 }
 
-async function share() {
-  const c = calc();
-  const text = `My estimated ${lift().label} max: ${c.max} ${S.unit} (${S.weight} × ${S.reps}). Find yours:`;
-  try {
-    if (navigator.share) { await navigator.share({ title: 'One-Rep Max Calculator', text, url: location.href }); return; }
-    await navigator.clipboard.writeText(`${text} ${location.href}`);
-    toast('Copied to clipboard');
-  } catch { /* user cancelled the share sheet */ }
+/* ---------- sharing ---------- */
+
+// Image files are fetched ahead of the tap: iOS only opens the share sheet if navigator.share()
+// runs close to the tap, so there's no time to fetch the image after it.
+const images = new Map<string, Promise<File>>();
+function imageFile(f: ImageFormat): Promise<File> {
+  const path = imagePath(shared(), f);
+  if (!images.has(path)) {
+    const name = `${path.slice(3).replace(/\//g, '-')}`;
+    const p = fetch(path).then((r) => (r.ok ? r.blob() : Promise.reject(r.status)))
+      .then((b) => new File([b], name, { type: 'image/png' }));
+    p.catch(() => images.delete(path));
+    images.set(path, p);
+  }
+  return images.get(path)!;
+}
+function prefetchShareImages() {
+  for (const f of ['story', 'post'] as const) imageFile(f).catch(() => {});
 }
 
-function toast(msg: string) {
+async function copy(text: string) {
+  try { await navigator.clipboard.writeText(text); return true; } catch { return false; }
+}
+
+/** Instagram takes images from websites but ignores any text, so the caption goes on the clipboard. */
+async function shareToInstagram(f: 'story' | 'post') {
+  const url = shareUrl();
+  const copied = copy(instagramCaption(shared(), url));
+  let file: File;
+  try { file = await imageFile(f); } catch { return toast('Couldn’t make the image. Try again.'); }
+  const how = f === 'story'
+    ? 'In Instagram, add a link sticker and paste your link.'
+    : 'Paste the caption in Instagram to add your link.';
+  if (navigator.canShare?.({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file] });
+      if (await copied) toast(`Caption and link copied. ${how}`, 5000);
+    } catch (e) {
+      // NotAllowedError: the tap "expired" while the image loaded. It's cached now, so a retap works.
+      if ((e as DOMException).name === 'NotAllowedError') toast('Image ready. Tap again to share.');
+    }
+    return;
+  }
+  // Desktop and browsers without file sharing: save the image instead.
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(file);
+  a.download = file.name;
+  a.click();
+  window.setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  toast(await copied ? 'Image saved, caption and link copied' : 'Image saved', 3500);
+}
+
+function openShare(url: string) {
+  window.open(url, '_blank', 'noopener,noreferrer,width=600,height=640');
+}
+
+async function share(kind: string) {
+  const url = shareUrl();
+  switch (kind) {
+    case 'story': case 'post': return shareToInstagram(kind);
+    case 'facebook': return openShare(facebookShareUrl(url));
+    case 'x': return openShare(xIntentUrl(shared(), url));
+    case 'copy': return toast(await copy(url) ? 'Link copied' : url, 3500);
+    case 'more':
+      try { await navigator.share({ text: shareCopy(shared()).post, url }); } catch { /* cancelled */ }
+      return;
+  }
+}
+
+function toast(msg: string, ms = 1800) {
   const t = document.getElementById('toast');
   if (!t) return;
   t.textContent = msg;
   t.classList.add('show');
-  window.setTimeout(() => t.classList.remove('show'), 1800);
+  window.clearTimeout(toastTimer);
+  toastTimer = window.setTimeout(() => t.classList.remove('show'), ms);
 }
 
 function onClick(e: Event) {
@@ -237,6 +319,7 @@ function onClick(e: Event) {
   if (d.reps) return pickThenAdvance({ reps: +d.reps });
   if (d.rir) return pickThenAdvance({ rir: +d.rir });
   if (d.go) return go(+d.go);
+  if (d.share) return void share(d.share);
   if (d.unit) return setUnit(d.unit as Unit);
   if (d.sex) { S.sex = d.sex as State['sex']; return render(true); }
   if (d.band) { S.band = d.band; return render(true); }
@@ -253,7 +336,6 @@ function onClick(e: Event) {
     case 'skip': S.compare = false; calculate(); break;
     case 'edit': case 'rank': S.compare = true; S.dir = -1; go(5); break;
     case 'again': S.reps = null; S.rir = null; S.dir = -1; go(1); break;
-    case 'share': void share(); break;
   }
 }
 

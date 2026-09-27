@@ -21,7 +21,7 @@ A free, mobile-first 1RM calculator that (1) ranks for "one rep max calculator" 
 ## Open decisions / next
 
 - **Comparison data** (blocks the ranking): choose a source (OpenPowerlifting raw, tested federations; or own submissions once volume allows), define groups (sex × IPF age class × bodyweight class; "Unspecified" = all lifters), build a percentile lookup table at build time (`src/data/standards.json`), replace `[62%]` and `[SOURCE]`.
-- **Share image**: generate the square share card as a PNG (OG image per result via query params, or client-side canvas).
+- **Share images**: done. `/r/<result>` share pages with a result-specific OG image, plus Instagram story and post images (see CLAUDE.md, Sharing). Next: a "your friend lifted X" banner on the homepage for visitors arriving from a share link.
 - **Embed**: `/embed` route with the calculator only + copy-paste iframe snippet and citation.
 - **Per-lift pages**: `/bench-press-calculator` etc. with the lift preselected (biggest spoke: "max bench calculator" 21k).
 - **Programmatic long tail**: "if I can bench 225 for 10 what is my max" style pages (dozens at 30–70/mo, near-zero KD). Generate from `onerm.ts` with unique tables per page; noindex thin combos.

@@ -2,13 +2,13 @@
 
 Free, mobile-first one-rep max (1RM) calculator. Enter one hard set, get an estimated max (Epley + Brzycki average, adjusted for reps in reserve), training weights, and a ranking against lifters of the same sex, age class and bodyweight.
 
-Built with [Astro](https://astro.build). Static output, deploys to Vercel.
+Built with [Astro](https://astro.build). Deploys to Vercel: pages are static, share links and share images (`/r/…`) run as a Vercel function.
 
 ```bash
 npm install
 npm run dev     # local dev
 npm test        # math + copy consistency tests
-npm run build   # type check + static build
+npm run build   # type check + build to .vercel/output
 ```
 
 - Product decisions: [`docs/PRD.md`](docs/PRD.md)

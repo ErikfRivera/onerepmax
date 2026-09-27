@@ -3,9 +3,19 @@ import '../styles/global.css';
 import { SITE } from '../data/site';
 import { pageSchema } from '../lib/schema';
 
-interface Props { title?: string; description?: string }
-const { title = SITE.title, description = SITE.description } = Astro.props;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).toString();
+interface Props {
+  title?: string;
+  description?: string;
+  /** Absolute URL for canonical and og:url. Defaults to this path on the configured site. */
+  url?: string;
+  /** og:image / twitter:image. Must be an absolute URL. */
+  image?: { url: string; alt: string; width: number; height: number };
+  robots?: string;
+  /** Include the site JSON-LD (WebApplication + FAQPage). Only for pages that render that content. */
+  schema?: boolean;
+}
+const { title = SITE.title, description = SITE.description, image, robots, schema = true } = Astro.props;
+const canonical = Astro.props.url ?? new URL(Astro.url.pathname, Astro.site ?? SITE.url).toString();
 ---
 <!doctype html>
 <html lang="en">
@@ -15,6 +25,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).toString()
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {robots && <meta name="robots" content={robots} />}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#F4F2EE" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#141310" media="(prefers-color-scheme: dark)" />
@@ -22,11 +33,24 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).toString()
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    {image && (
+      <>
+        <meta property="og:image" content={image.url} />
+        <meta property="og:image:type" content="image/png" />
+        <meta property="og:image:width" content={String(image.width)} />
+        <meta property="og:image:height" content={String(image.height)} />
+        <meta property="og:image:alt" content={image.alt} />
+        <meta name="twitter:image" content={image.url} />
+        <meta name="twitter:image:alt" content={image.alt} />
+      </>
+    )}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wght@400;500;600;700&display=swap" />
-    <script type="application/ld+json" set:html={JSON.stringify(pageSchema())} />
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(pageSchema())} />}
   </head>
   <body>
     <slot />

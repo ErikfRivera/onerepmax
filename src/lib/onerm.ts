@@ -75,10 +75,13 @@ export function convertBodyweight(value: number, to: Unit): number {
   return Math.round(to === 'kg' ? value / LB_PER_KG : value * LB_PER_KG);
 }
 
+/** Heaviest plausible load, just above the world records. */
+export const WEIGHT_CEILING: Record<Unit, number> = { lb: 1200, kg: 550 };
+
 /** Sanity warnings for the weight step. Empty string = fine. */
 export function weightWarning(weight: number, unit: Unit): string {
   const emptyBar = unit === 'lb' ? 45 : 20;
-  const ceiling = unit === 'lb' ? 1200 : 550;
+  const ceiling = WEIGHT_CEILING[unit];
   if (weight > 0 && weight < emptyBar) return 'That’s lighter than an empty bar. Double-check the number.';
   if (weight > ceiling) return 'That’s above the world record. Double-check the number.';
   return '';

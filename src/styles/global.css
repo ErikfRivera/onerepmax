@@ -221,15 +221,11 @@ th{text-align:left;padding:10px 14px;font-size:12px;font-weight:600;color:var(--
 td{padding:11px 14px;font-size:16px;border-top:1px solid var(--line-soft)}
 td:nth-child(2){font-weight:700}
 td:nth-child(3){color:var(--body)}
-.share-card{aspect-ratio:1/1;width:100%;background:#16150F;color:#F4F2EE;border-radius:18px;padding:24px;display:flex;flex-direction:column;justify-content:space-between}
-.share-card .t{font-size:13px;font-weight:600;color:#BDB8AC}
-.share-card .n{display:flex;align-items:baseline;gap:8px}
-.share-card .n b{font-family:var(--display);font-stretch:72%;font-weight:900;font-size:clamp(96px,30vw,128px);line-height:.85;font-variant-numeric:tabular-nums}
-.share-card .n span{font-family:var(--display);font-stretch:80%;font-weight:700;font-size:30px}
-.share-card .f{display:flex;justify-content:space-between;font-size:13px;color:#BDB8AC}
-.share-card .f strong{color:#F4F2EE}
+.share-img{display:block;width:100%;height:auto;border-radius:18px;background:#16150F}
+.share-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.share-grid button{min-height:48px;border:1.5px solid var(--line);background:var(--card);border-radius:12px;font-size:15px;font-weight:700}
 .secondary{height:50px;border:1.5px solid var(--ink);background:transparent;border-radius:12px;font-size:15px;font-weight:700}
-.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--ground);padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast{position:fixed;left:50%;width:max-content;max-width:calc(100% - 32px);text-align:center;line-height:1.35;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--ground);padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.show{opacity:1}
 
 /* ---- Astro port additions ---- */
@@ -239,3 +235,10 @@ td:nth-child(3){color:var(--body)}
 .landing-note{margin-top:4px}
 .app > .foot{margin:0}
 [hidden]{display:none!important}
+
+/* share page (/r/…), seen only without JS or for a moment before the redirect */
+.shared{max-width:440px;margin:0 auto;padding:24px 20px;display:flex;flex-direction:column;gap:16px}
+.shared img{width:100%;height:auto;border-radius:18px}
+.shared h1{font-size:28px}
+.shared p{margin:0;color:var(--body);line-height:1.4}
+.shared .primary{text-decoration:none}

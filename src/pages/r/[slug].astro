@@ -1,0 +1,33 @@
+---
+/**
+ * Share page for one result. Crawlers (Facebook, X, iMessage, Slack…) read the result-specific
+ * title, description and image; people are sent straight on to the calculator.
+ */
+import Base from '../../layouts/Base.astro';
+import { IMAGE_FORMATS, imagePath, parseShareSlug, shareCopy } from '../../lib/share';
+
+export const prerender = false;
+
+const r = parseShareSlug(Astro.params.slug);
+if (!r) return Astro.redirect('/', 302);
+
+const c = shareCopy(r);
+const origin = Astro.url.origin;
+Astro.response.headers.set('Cache-Control', 'public, max-age=300, s-maxage=31536000');
+---
+<Base
+  title={c.title}
+  description={c.description}
+  url={new URL(Astro.url.pathname, origin).toString()}
+  image={{ url: new URL(imagePath(r, 'og'), origin).toString(), alt: c.alt, ...IMAGE_FORMATS.og }}
+  robots="noindex, follow"
+  schema={false}
+>
+  <script is:inline>location.replace('/');</script>
+  <main class="shared">
+    <img src={imagePath(r, 'post')} alt={c.alt} width={IMAGE_FORMATS.post.width} height={IMAGE_FORMATS.post.height} />
+    <h1>{c.title}</h1>
+    <p>{c.description}</p>
+    <a class="primary" href="/">Calculate your max</a>
+  </main>
+</Base>
