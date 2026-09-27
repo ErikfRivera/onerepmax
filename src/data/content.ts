@@ -56,17 +56,8 @@ export const FAQ = [
     html: '<p>Bench 2–3 times a week, spend most sets in the 3–6 rep range at roughly 75–90% of your max, and add a little weight each week. Build your triceps, shoulders and upper back, keep your technique consistent, and eat and sleep enough to recover. Recalculate your max every 4–8 weeks to update your training weights.</p>' },
 ];
 
-export const FOOTER_COLUMNS = [
-  { heading: 'Tools', links: [
-    { label: 'One-rep max calculator', href: '/' },
-    { label: 'Strength standards', href: '#' }, // TODO: /strength-standards
-    { label: 'Percentage chart', href: '#' }, // TODO: /1rm-percentage-chart
-    { label: 'Embed this calculator', href: '#' }, // TODO: /embed
-  ] },
-  { heading: 'About', links: [
-    { label: 'Methodology', href: '#formulas' },
-    { label: 'About [Brand]', href: '#' },
-    { label: 'Contact', href: '#' },
-    { label: 'Press', href: '#' },
-  ] },
+export const FOOTER_LINKS = [
+  { label: 'Contact', href: '#' }, // TODO: contact page or mailto
+  { label: 'Privacy', href: '#' }, // TODO: /privacy
+  { label: 'Terms', href: '#' }, // TODO: /terms
 ];
