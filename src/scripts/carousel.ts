@@ -20,7 +20,10 @@ export function initCarousel() {
 
   const cards = () => Array.from(q.children) as HTMLElement[];
   const offset = (el: HTMLElement) => el.offsetLeft - q.offsetLeft - 20;
+  // On wide screens two cards show at once, so the last card can't snap to the start.
+  const atEnd = () => q.scrollLeft >= q.scrollWidth - q.clientWidth - 2;
   const current = () => {
+    if (atEnd()) return cards().length - 1;
     let best = 0, bd = Infinity;
     cards().forEach((c, i) => { const d = Math.abs(offset(c) - q.scrollLeft); if (d < bd) { bd = d; best = i; } });
     return best;
@@ -35,7 +38,7 @@ export function initCarousel() {
   };
   const tick = () => {
     if (paused || hold || !visible || document.hidden || q.offsetParent === null) return;
-    const next = cards()[(current() + 1) % cards().length];
+    const next = cards()[atEnd() ? 0 : current() + 1];
     q.scrollTo({ left: offset(next), behavior: reduce ? 'auto' : 'smooth' });
   };
 

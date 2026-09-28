@@ -19,7 +19,7 @@ const avg = estimate(w, r).max;
       <tbody>
         {rows.map((f) => (
           <tr class={f.used ? 'used' : undefined}>
-            <td><b>{f.name}</b><small>{f.year}{f.used ? ', in our average' : ''}</small></td>
+            <td><b>{f.name}</b><small>{f.year}{f.used ? ', in our average' : ''}</small><small class="eq-m">{f.eq}</small></td>
             <td class="eqc">{f.eq}</td>
             <td class="num">{f.value}</td>
           </tr>

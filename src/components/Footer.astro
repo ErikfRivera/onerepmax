@@ -1,7 +1,9 @@
 ---
 import { FOOTER_LINKS } from '../data/content';
+import { SITE } from '../data/site';
 ---
 <footer class="foot" id="site-footer">
+  <p>© {SITE.year} {SITE.brand}</p>
   <nav aria-label="Footer">
     <ul>{FOOTER_LINKS.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul>
   </nav>
