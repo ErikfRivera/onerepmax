@@ -19,14 +19,17 @@ Deploys to Vercel as a static Astro site (no adapter needed). Run `npm test && n
 src/
   pages/index.astro        Landing + calculator. Step 1 and all SEO content are server-rendered.
   layouts/Base.astro       <head>: meta, canonical, OG, fonts, JSON-LD
-  components/              One component per landing section (Hero, HowItWorks, LiftPicker,
+  components/              One component per landing section (Hero, HowItWorks, LiftPicker, Happening,
                            Testimonials, Formulas, Faq, Footer, Laurel)
   scripts/flow.ts          Client-side steps 2–5, calculating beat, results (renders into #flow)
   scripts/carousel.ts      Auto-advancing testimonials with pause control
+  scripts/pulse.ts         Live activity: "lifters here now", Happening now feed, pop-ups (TEST DATA)
   lib/onerm.ts             ALL math. Pure functions. Single source of truth for every number.
   lib/onerm.test.ts        Tests, including "FAQ copy matches the math"
+  lib/pulse.ts             Live activity generator + market detection (tested in pulse.test.ts)
   lib/schema.ts            JSON-LD @graph (WebApplication + FAQPage), built from src/data
-  data/                    site.ts (brand/URL), flow.ts (answer options), content.ts (copy)
+  data/                    site.ts (brand/URL), flow.ts (answer options), content.ts (copy),
+                           pulse.ts (live activity cities, pop-up templates, PULSE_DEMO flag)
   styles/global.css        Design tokens + all styles
 ```
 
@@ -66,3 +69,4 @@ Search the repo for `[` and `TODO`:
 - Percentile data + source for the ranking (see PRD, "Comparison data")
 - Real testimonials
 - Footer link targets and Privacy/Terms pages
+- Live activity (`src/data/pulse.ts`): every event and count is generated test data. Wire it to real, anonymized calculation events or set `PULSE_DEMO = false` before launch

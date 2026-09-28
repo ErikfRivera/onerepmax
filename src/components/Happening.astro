@@ -1,0 +1,21 @@
+---
+import { PULSE_DEMO } from '../data/pulse';
+---
+<!-- Filled by src/scripts/pulse.ts. Hidden until then so no-JS visitors never see an empty feed. -->
+{PULSE_DEMO && (
+  <section class="below happening" id="happening" aria-labelledby="hn-head" hidden>
+    <div class="feed-head">
+      <h2 id="hn-head">Happening now</h2>
+      <button type="button" class="live-tag" data-pulse-toggle aria-pressed="false" aria-label="Pause live updates">
+        <span class="live-dot" aria-hidden="true"></span><span data-pulse-toggle-label>Live</span>
+      </button>
+    </div>
+    <div class="stats">
+      <div class="stat"><b data-stat="today">&nbsp;</b><span>maxes calculated today</span></div>
+      <div class="stat"><b data-stat="now">&nbsp;</b><span>lifters on the site now</span></div>
+      <div class="stat"><b>Bench</b><span>most calculated lift this week</span></div>
+    </div>
+    <ul class="feed" data-pulse-feed></ul>
+    <p class="feed-note">Anonymous. We show the lift, rep count and area, never names or weights.</p>
+  </section>
+)}
