@@ -1,6 +1,6 @@
 /**
  * The calculator flow. Step 1 (lift picker) is static HTML in index.astro;
- * this module takes over from the first tap and renders steps 2–5, the
+ * this module handles its selection and Continue, then renders steps 2–5, the
  * calculating beat and the results into #flow.
  */
 import { LIFTS, RIR, AGE_BANDS, SEXES, type LiftId } from '../data/flow';
@@ -18,7 +18,7 @@ interface State {
 }
 
 const S: State = {
-  step: 1, dir: 1, screen: 'input', lift: null, reps: null, rir: null,
+  step: 1, dir: 1, screen: 'input', lift: LIFTS[0].id, reps: null, rir: null,
   weight: '', unit: 'lb', sex: null, band: null, bw: '', compare: true,
 };
 
@@ -227,13 +227,8 @@ function onClick(e: Event) {
   const b = (e.target as HTMLElement).closest<HTMLButtonElement>('button');
   if (!b) return;
   const d = b.dataset;
-  if (d.lift) {
-    const l = LIFTS.find((x) => x.id === d.lift)!;
-    const patch: Partial<State> = { lift: l.id };
-    if (!S.weight) patch.weight = S.unit === 'lb' ? String(l.defaultLb) : fmt(convertWeight(l.defaultLb, 'kg'));
-    pickThenAdvance(patch);
-    return;
-  }
+  // Step 1 is select-then-Continue (Bench preselected), so the lift tiles don't auto-advance.
+  if (d.lift) { S.lift = d.lift as LiftId; return render(true); }
   if (d.reps) return pickThenAdvance({ reps: +d.reps });
   if (d.rir) return pickThenAdvance({ rir: +d.rir });
   if (d.go) return go(+d.go);
@@ -248,6 +243,11 @@ function onClick(e: Event) {
     case 'wdown': S.weight = fmt(Math.max(0, w - step)); render(true); break;
     case 'bwup': S.bw = fmt((bw || (S.unit === 'lb' ? 179 : 81.5)) + bwStep); render(true); break;
     case 'bwdown': S.bw = fmt(Math.max(0, (bw || (S.unit === 'lb' ? 181 : 82.5)) - bwStep)); render(true); break;
+    case 'start': {
+      const l = lift();
+      if (!S.weight) S.weight = S.unit === 'lb' ? String(l.defaultLb) : fmt(convertWeight(l.defaultLb, 'kg'));
+      go(2); break;
+    }
     case 'next': if (w > 0) go(5); break;
     case 'calc': if (compareReady()) { S.compare = true; calculate(); } break;
     case 'skip': S.compare = false; calculate(); break;

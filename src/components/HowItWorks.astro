@@ -6,7 +6,7 @@ import { HOW_IT_WORKS } from '../data/content';
   <div class="how-track">
     <ol>
       {HOW_IT_WORKS.map((t, i) => (
-        <li><span class="n" aria-hidden="true">{i + 1}</span><span class="t">{t}</span></li>
+        <li class={i === 0 ? 'on' : undefined} aria-current={i === 0 ? 'step' : undefined}><span class="n" aria-hidden="true">{i + 1}</span><span class="t">{t}</span></li>
       ))}
     </ol>
   </div>

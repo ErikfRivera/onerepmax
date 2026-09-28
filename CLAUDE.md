@@ -49,7 +49,7 @@ src/
 - Touch targets ≥44px. Text contrast ≥4.5:1. Respect `prefers-reduced-motion`. Every auto-moving element needs a pause control.
 
 **Flow UX** (progressive disclosure, micro-conversions)
-- One question per screen. Single-choice steps auto-advance ~180ms after the tap. Only typed inputs get a Continue button.
+- One question per screen. Step 1 (lift) has Bench preselected and a Continue button, so the select-then-continue pattern is clear. Later single-choice steps auto-advance ~180ms after the tap. Typed inputs get a Continue button.
 - Order: lift → reps → how close to failure → weight → compare (sex, age group, bodyweight). The compare step always offers "Skip, just show my max."
 - Answered steps show as editable chips under the progress bar.
 
