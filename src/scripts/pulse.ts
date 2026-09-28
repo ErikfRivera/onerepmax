@@ -121,7 +121,7 @@ export function initPulse() {
 
   const render = (t: PulseToast) => {
     toast.innerHTML =
-      `<span class="pt-badge" aria-hidden="true"><b>${esc(t.badge[0])}</b><small>${esc(t.badge[1])}</small></span>` +
+      `<span class="pt-badge" aria-hidden="true"><b${t.badge[0].length > 3 ? ' class="long"' : ''}>${esc(t.badge[0])}</b><small>${esc(t.badge[1])}</small></span>` +
       `<div class="pt-body"><p><strong>${esc(t.lead)}</strong> ${esc(t.rest)}</p>` +
       `<div class="pt-meta"><span class="live-dot" aria-hidden="true"></span>${esc(t.meta)}</div></div>` +
       `<button type="button" class="pt-x" aria-label="Hide live activity">${CLOSE}</button>`;
