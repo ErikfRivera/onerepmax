@@ -1,6 +1,7 @@
 ---
 import Laurel from './Laurel.astro';
 import { SITE } from '../data/site';
+import { HERO } from '../data/content';
 ---
 <div class="logo"><span>[LOGO]</span></div>
 <div class="hero">
@@ -15,10 +16,7 @@ import { SITE } from '../data/site';
     <span>Maxes taken by <b>{SITE.usersCount}</b> lifters and coaches</span>
     <Laurel flip />
   </div>
-  <h1>One-Rep Max Calculator</h1>
-  <p class="lede">Find your <b>one-rep max</b>. See how you compare.</p>
-  <p class="credit">
-    Uses the two formulas strength coaches rely on most, developed by <b>Boyd Epley</b> (founder of the NSCA)
-    and <b>Matt Brzycki</b> (Princeton strength coach).
-  </p>
+  <h1>{SITE.name}</h1>
+  <p class="lede" set:html={HERO.ledeHtml} />
+  <p class="credit" set:html={HERO.creditHtml} />
 </div>

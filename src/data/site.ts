@@ -1,6 +1,7 @@
 /** Brand and URL placeholders. Replace before launch — search the repo for "[" to find the rest. */
 export const SITE = {
   brand: '[Brand]',
+  name: 'One-Rep Max Calculator', // the tool's name: H1, schema, markdown, llms.txt
   url: 'https://example.com', // TODO: real domain (also set `site` in astro.config.mjs)
   path: '/', // calculator lives at the root for now
   title: 'One-Rep Max Calculator: Estimate Your 1RM and See How You Compare',

@@ -7,9 +7,10 @@ import Happening from '../components/Happening.astro';
 import Testimonials from '../components/Testimonials.astro';
 import Formulas from '../components/Formulas.astro';
 import Faq from '../components/Faq.astro';
+import Cite from '../components/Cite.astro';
 import Footer from '../components/Footer.astro';
 ---
-<Base>
+<Base markdown="/index.md">
   <div class="app">
     <!-- Step 1 + all SEO content: server-rendered, crawlable without JS. -->
     <main id="landing" class="screen">
@@ -21,6 +22,7 @@ import Footer from '../components/Footer.astro';
       <Testimonials />
       <Formulas />
       <Faq />
+      <Cite />
     </main>
 
     <!-- Steps 2–5, calculating and results: rendered client-side by src/scripts/flow.ts -->
@@ -34,8 +36,10 @@ import Footer from '../components/Footer.astro';
     import { initFlow } from '../scripts/flow';
     import { initCarousel } from '../scripts/carousel';
     import { initPulse } from '../scripts/pulse';
+    import { initCite } from '../scripts/cite';
     initFlow();
     initCarousel();
     initPulse();
+    initCite();
   </script>
 </Base>
