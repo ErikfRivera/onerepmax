@@ -7,6 +7,7 @@ import { LIFTS, RIR, AGE_BANDS, SEXES, type LiftId } from '../data/flow';
 import {
   estimate, trainingTable, roundTo, convertWeight, convertBodyweight, weightWarning, fmt, type Unit,
 } from '../lib/onerm';
+import { toast } from './toast';
 
 type Screen = 'input' | 'loading' | 'result';
 interface State {
@@ -213,14 +214,6 @@ async function share() {
     await navigator.clipboard.writeText(`${text} ${location.href}`);
     toast('Copied to clipboard');
   } catch { /* user cancelled the share sheet */ }
-}
-
-function toast(msg: string) {
-  const t = document.getElementById('toast');
-  if (!t) return;
-  t.textContent = msg;
-  t.classList.add('show');
-  window.setTimeout(() => t.classList.remove('show'), 1800);
 }
 
 function onClick(e: Event) {

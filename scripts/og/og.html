@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>OG card</title>
+<!--
+  Share image template for public/og.png (1200×630). Regenerate with `npm run og:image`.
+  Brand-neutral on purpose: add the brand name and logo once the placeholders in
+  src/data/site.ts are resolved. The worked example (225 × 5 → 258) is estimate(225, 5).max,
+  pinned by src/lib/onerm.test.ts ("averages Epley and Brzycki").
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Instrument+Sans:wght@400;500;600;700&display=swap" />
+<style>
+  :root{--ground:#F4F2EE;--ink:#16150F;--accent:#E0582B;--accent-ink:#B8431C;--gold:#B08A3E;--muted:#54514A;--line:#DAD5CB;
+    --display:"Archivo","Inter Display","Arial Narrow","Helvetica Neue",sans-serif;--text:"Instrument Sans","Inter",system-ui,sans-serif}
+  html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:var(--ground);color:var(--ink);font-family:var(--text)}
+  .card{box-sizing:border-box;width:1200px;height:630px;padding:64px 72px;display:grid;grid-template-columns:1fr 380px;gap:48px;align-items:center;position:relative}
+  .card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:14px;background:var(--accent)}
+  .kicker{font-size:22px;font-weight:600;color:var(--accent-ink);letter-spacing:.02em;text-transform:uppercase;margin:0 0 18px}
+  h1{margin:0;font-family:var(--display);font-stretch:85%;font-weight:900;font-size:104px;line-height:.92;letter-spacing:-.02em}
+  .sub{margin:28px 0 0;font-size:30px;line-height:1.3;color:var(--muted);max-width:640px}
+  .example{background:var(--ink);color:var(--ground);border-radius:28px;padding:36px 36px 32px;display:flex;flex-direction:column;gap:10px}
+  .example .t{font-size:20px;font-weight:600;color:#BDB8AC}
+  .example .n{display:flex;align-items:baseline;gap:12px}
+  .example .n b{font-family:var(--display);font-stretch:72%;font-weight:900;font-size:168px;line-height:.85;font-variant-numeric:tabular-nums}
+  .example .n span{font-family:var(--display);font-stretch:80%;font-weight:700;font-size:40px}
+  .example .f{margin-top:18px;font-size:19px;color:#BDB8AC;line-height:1.4}
+  .example .f strong{color:var(--ground)}
+</style>
+</head>
+<body>
+  <div class="card">
+    <div>
+      <p class="kicker">Free, no sign-up</p>
+      <h1>One-Rep Max Calculator</h1>
+      <p class="sub">Enter one hard set. Get your estimated max, training weights and where you rank.</p>
+    </div>
+    <div class="example">
+      <span class="t">Bench, 225 lb × 5 reps</span>
+      <span class="n"><b>258</b><span>lb</span></span>
+      <span class="f">Estimated one-rep max.<br /><strong>Epley and Brzycki</strong>, averaged.</span>
+    </div>
+  </div>
+</body>
+</html>

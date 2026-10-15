@@ -161,6 +161,13 @@ h1{margin:0;font-family:var(--display);font-stretch:92%;font-weight:800;font-siz
 .faq .ans ul{margin:0 0 10px;padding-left:20px}
 .faq .ans li{margin:2px 0;font-variant-numeric:tabular-nums}
 .formulas .body{margin:0;font-size:15px;line-height:1.55;color:var(--body)}
+.cite .body{margin:0;font-size:15px;line-height:1.55;color:var(--body)}
+.cite-box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.cite-label{font-size:12px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--muted)}
+.cite-box pre{margin:0;white-space:pre-wrap;overflow-wrap:anywhere;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:13px;line-height:1.5;color:var(--ink)}
+.cite-box .secondary{align-self:flex-start;padding:0 16px;color:var(--ink)}
+.cite-formats{margin:0;font-size:13px;line-height:1.5;color:var(--muted)}
+.cite-formats a{color:var(--body);font-weight:600;text-underline-offset:3px}
 .fcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .fcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:6px}
 .fcard b{font-size:15px}

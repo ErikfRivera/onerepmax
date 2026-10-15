@@ -16,7 +16,8 @@ A free, mobile-first 1RM calculator that (1) ranks for "one rep max calculator" 
 2. **Flow**: reps (1–10) → how close to failure (0/1/2/3+ reps in reserve) → weight (prefilled per lift, lb/kg) → compare (sex: male/female/unspecified, IPF age class, bodyweight) with a skip option → calculating beat (~0.9s) → results.
 3. **Results**: estimated max (Epley/Brzycki average, RIR-adjusted), both formula values, percentile vs. comparison group, training-weights table (95–60%), share card + native share.
 4. **Below the fold**: auto-advancing testimonials (pausable), formula explainer with all seven published equations, FAQ (6 questions from Ahrefs question clusters), footer.
-5. **SEO**: server-rendered content, canonical, OG, sitemap, robots, JSON-LD `@graph` (WebApplication + FAQPage, entities: 1RM → Wikipedia, Epley, Brzycki, NSCA, RPE, RIR).
+5. **SEO**: server-rendered content, canonical, OG (with a 1200×630 share image), sitemap, robots, JSON-LD `@graph` (Organization + WebSite + WebApplication + FAQPage, entities: 1RM → Wikipedia, Epley, Brzycki, NSCA, RPE, RIR).
+6. **AI discoverability and citation**: `/llms.txt` and `/llms-full.txt`, a markdown alternate of every page (`/index.md`, linked as `rel="alternate"`), explicit allow rules for AI crawlers in robots.txt, and a "How to cite this calculator" block with a copyable citation and link snippet. All generated from the same copy and math as the page.
 
 ## Open decisions / next
 

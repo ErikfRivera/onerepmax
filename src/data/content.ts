@@ -1,6 +1,53 @@
-/** Page copy that is data-shaped. Prose that isn't reused lives in the components. */
+/**
+ * Page copy. Everything here renders in the HTML components AND in the markdown /
+ * llms.txt builders (src/lib/markdown.ts), so the formats can never drift.
+ */
+import { MAX_REPS } from '../lib/onerm';
 
 export const HOW_IT_WORKS = ['Pick your lift', 'Enter your set', 'Rate the effort', 'See where you rank'];
+
+/** Hero copy. `html` strings carry inline <b> only. */
+export const HERO = {
+  ledeHtml: 'Find your <b>one-rep max</b>. See how you compare.',
+  creditHtml:
+    'Uses the two formulas strength coaches rely on most, developed by <b>Boyd Epley</b> (founder of the NSCA) and <b>Matt Brzycki</b> (Princeton strength coach).',
+};
+
+/** Formula explainer prose. The equations themselves live in FORMULA_META. */
+export const FORMULAS_COPY = {
+  heading: 'The one-rep max formulas we use',
+  intro:
+    'A 1RM calculator turns a hard set into an estimated max with a prediction equation. We use the two most widely cited, Epley and Brzycki, and average them.',
+  epley: {
+    name: 'Epley formula',
+    eq: '1RM = w × (1 + r ÷ 30)',
+    note: 'Published in 1985 by Boyd Epley, the University of Nebraska strength coach who founded the National Strength and Conditioning Association.',
+  },
+  brzycki: {
+    name: 'Brzycki formula',
+    eq: '1RM = w × 36 ÷ (37 − r)',
+    note: 'Published in 1993 by Matt Brzycki, longtime strength coach at Princeton University.',
+  },
+  comparison: (w: number, r: number) =>
+    `Epley reads a little high below 10 reps and Brzycki a little low. At exactly 10 reps they agree, so their average lands in the middle of the published formulas. Here is every major equation for the same set, ${w} lb × ${r} (w is weight, r is reps):`,
+  rirHeading: 'Adjusting for reps in reserve',
+  rir: 'Every formula assumes your set went to failure. If you had reps left, we add them to your rep count before calculating. This is the reps-in-reserve (RIR) method behind the modern RPE scale, introduced for lifting by Zourdos and colleagues in 2016.',
+  limitsHeading: 'Where estimates break down',
+  limits: `Formulas agree closely at 2–6 reps and spread apart past ${MAX_REPS}, which is why we cap input at ${MAX_REPS}. Brzycki stops working entirely near 37 reps. Lifters with a lot of endurance training tend to get overestimated; lifters who mostly train heavy singles tend to get underestimated.`,
+};
+
+/** Citation block. Rendered on the page (Cite.astro), in index.md and in llms.txt. */
+export const CITATION = {
+  heading: 'How to cite this calculator',
+  intro: 'Link to or quote this page freely. The method and the worked examples are public and identical in every format of this page.',
+  method: `Our estimate is the average of the Epley and Brzycki formulas, after adding reps in reserve to the reps you did. A single (1 rep) returns the weight itself. Reps are capped at ${MAX_REPS}.`,
+  /** Plain-text citation, APA style. */
+  text: (brand: string, year: number, url: string) => `${brand}. (${year}). One-rep max calculator [Web application]. ${url}`,
+  /** Descriptive anchor for inbound links (see CLAUDE.md, SEO). */
+  anchor: 'one rep max calculator',
+  linkHtml: (url: string) => `<a href="${url}">one rep max calculator</a>`,
+  formats: 'This page is also available as plain markdown for AI assistants and scripts.',
+};
 
 /**
  * SAMPLE testimonials — placeholders only.

@@ -15,20 +15,37 @@ export function htmlToText(html: string): string {
 
 export function pageSchema() {
   const url = new URL(SITE.path, SITE.url).toString();
+  const orgId = `${SITE.url.replace(/\/$/, '')}/#org`;
+  const siteId = `${SITE.url.replace(/\/$/, '')}/#website`;
   return {
     '@context': 'https://schema.org',
     '@graph': [
       {
+        '@type': 'Organization',
+        '@id': orgId,
+        name: SITE.brand,
+        url: SITE.url,
+      },
+      {
+        '@type': 'WebSite',
+        '@id': siteId,
+        name: SITE.name,
+        url: SITE.url,
+        publisher: { '@id': orgId },
+      },
+      {
         '@type': 'WebApplication',
         '@id': `${url}#app`,
-        name: 'One-Rep Max Calculator',
+        name: SITE.name,
         url,
+        mainEntityOfPage: url,
+        isPartOf: { '@id': siteId },
         applicationCategory: 'HealthApplication',
         operatingSystem: 'Any',
         browserRequirements: 'Requires JavaScript',
         description: SITE.description,
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-        publisher: { '@type': 'Organization', name: SITE.brand, url: SITE.url },
+        publisher: { '@id': orgId },
         about: { '@type': 'Thing', name: 'One-repetition maximum', sameAs: 'https://en.wikipedia.org/wiki/One-repetition_maximum' },
         mentions: [
           { '@type': 'Person', name: 'Boyd Epley', description: 'Founder of the National Strength and Conditioning Association; author of the Epley 1RM formula (1985)' },

@@ -1,0 +1,23 @@
+---
+import { CITATION } from '../data/content';
+import { SITE } from '../data/site';
+const url = new URL(SITE.path, SITE.url).toString();
+const citation = CITATION.text(SITE.brand, SITE.year, url);
+const link = CITATION.linkHtml(url);
+---
+<section class="below cite" id="cite" aria-labelledby="c-head">
+  <h2 id="c-head">{CITATION.heading}</h2>
+  <p class="intro">{CITATION.intro}</p>
+  <p class="body"><b>Method.</b> {CITATION.method}</p>
+  <div class="cite-box">
+    <span class="cite-label" id="cite-text-label">Citation</span>
+    <pre id="cite-text" aria-labelledby="cite-text-label">{citation}</pre>
+    <button type="button" class="secondary" data-copy="cite-text">Copy citation</button>
+  </div>
+  <div class="cite-box">
+    <span class="cite-label" id="cite-link-label">Link to this page</span>
+    <pre id="cite-link" aria-labelledby="cite-link-label">{link}</pre>
+    <button type="button" class="secondary" data-copy="cite-link">Copy link HTML</button>
+  </div>
+  <p class="cite-formats">{CITATION.formats} <a href="/index.md">index.md</a> · <a href="/llms.txt">llms.txt</a></p>
+</section>
