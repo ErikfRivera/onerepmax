@@ -264,14 +264,12 @@ td:nth-child(3){color:var(--body)}
 .lift-picker .lift[aria-pressed="true"]{background:var(--well-2);color:var(--ink);border:1.5px solid var(--ink)}
 .lift-picker .check{position:absolute;top:50%;right:14px;width:22px;height:22px;margin-top:-11px;border-radius:50%;background:var(--ink);color:var(--ground);display:none;align-items:center;justify-content:center}
 .lift-picker .lift[aria-pressed="true"] .check{display:flex}
-.picker-foot{display:flex;align-items:center;justify-content:flex-end;gap:14px}
+.picker-foot{display:flex;justify-content:center}
 .pill{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 22px 0 18px;border:0;border-radius:22px;background:var(--ink);color:var(--ground);font-weight:700;font-size:15px;flex-shrink:0}
 /* pointing finger before "Continue": draws the eye to the button; nudges right, still under reduced motion */
 @keyframes nudge{0%,60%,100%{transform:none}30%{transform:translateX(3px)}}
 .pill .point{font-size:18px;line-height:1;animation:nudge 1.6s ease-in-out infinite}
 @media (prefers-reduced-motion: reduce){.pill .point{animation:none}}
-.picker-note{margin:0;display:flex;align-items:center;gap:6px;font-size:12.5px;line-height:1.3;color:var(--muted)}
-.picker-note svg{flex-shrink:0}
 /* assurance pills under the picker card ("100% Free", "No Signup Required") */
 .assure{list-style:none;margin:-2px 0 0;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:8px}
 .assure li{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px 0 12px;border:1px solid var(--line);background:var(--card);border-radius:18px;font-size:13px;font-weight:600;color:var(--ink);white-space:nowrap}
@@ -296,10 +294,6 @@ td:nth-child(3){color:var(--body)}
 @keyframes ping{0%{transform:scale(1);opacity:.55}100%{transform:scale(2.6);opacity:0}}
 .live-dot{position:relative;width:8px;height:8px;border-radius:50%;background:var(--accent);flex-shrink:0;display:inline-block}
 .live-dot::after{content:"";position:absolute;inset:0;border-radius:50%;background:var(--accent);animation:ping 1.6s ease-out infinite}
-.picker-foot{justify-content:space-between}
-.picker-meta{display:flex;flex-direction:column;gap:3px;min-width:0}
-.live-line{margin:0;display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink)}
-.live-line b{font-variant-numeric:tabular-nums}
 .feed-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .live-tag{position:relative;display:inline-flex;align-items:center;gap:7px;height:30px;padding:0 12px;border:0;border-radius:15px;background:color-mix(in srgb,var(--accent) 12%,transparent);color:var(--accent-ink);font-size:12.5px;font-weight:700}
 .live-tag::before{content:"";position:absolute;inset:-7px -4px}

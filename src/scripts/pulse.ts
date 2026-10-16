@@ -49,9 +49,6 @@ export function initPulse() {
     document.querySelectorAll('[data-stat="now"]').forEach((el) => { el.textContent = fmt(pulse.hereNow); });
     document.querySelectorAll('[data-stat="today"]').forEach((el) => { el.textContent = fmt(pulse.today); });
   };
-  document.querySelector<HTMLElement>('[data-pulse-live]')!.hidden = false;
-  document.querySelector<HTMLElement>('[data-note-long]')!.hidden = true;
-  document.querySelector<HTMLElement>('[data-note-short]')!.hidden = false;
 
   /* ---------- feed ---------- */
   const liftName = (id: string) => LIFTS.find((l) => l.id === id)!.title;
